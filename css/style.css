@@ -1,0 +1,42 @@
+header{
+    border: 1px solid black;
+}
+nav{
+    padding-left:200px;
+}
+nav ul li{
+    display: inline;
+    padding-bottom:40px;
+    padding-left: 60px;
+    text-decoration:none;
+}
+
+main{
+   
+    
+  padding-bottom: 250px;
+}
+
+aside{
+    float: left;
+    border: 1px solid black;
+}
+
+section p{
+    
+    padding-top:50px;
+    position: absolute;
+    border: 1px solid black;
+
+}
+img{
+    width:150px;
+    margin-left:100px;
+    padding-left: 30px;
+}
+
+footer{
+    margin-top: 500px;
+    border: 1px solid black;
+
+}
