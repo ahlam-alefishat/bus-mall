@@ -139,7 +139,8 @@ function render2() {
         var li = document.createElement('li');
         Product.all[i].name=(Product.all[i].name).split(".")[0];
         li.textContent = ` ${Product.all[i].name} has:  ${Product.all[i].clicks} clicks, and , ${Product.all[i].views} views.`;
-        
+
+
         ul.appendChild(li);
     }
 }
