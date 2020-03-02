@@ -62,9 +62,14 @@ function render() {
     leftProduct = Product.all[randomNumber(0, Product.all.length - 1)];
     middleProduct = Product.all[randomNumber(0, Product.all.length - 1)];
     rightProduct = Product.all[randomNumber(0, Product.all.length - 1)];
+   
+    while (leftProduct === middleProduct || leftProduct === rightProduct || middleProduct ===rightProduct){
+        leftProduct = Product.all[randomNumber(0, Product.all.length - 1)];
+        middleProduct = Product.all[randomNumber(0, Product.all.length - 1)];
+        rightProduct = Product.all[randomNumber(0, Product.all.length - 1)];
 
-    
-    if(leftProduct !== middleProduct && leftProduct !== rightProduct && middleProduct !==rightProduct ){
+}
+    // if(leftProduct !== middleProduct && leftProduct !== rightProduct && middleProduct !==rightProduct ){
 
     leftImage.setAttribute('src', leftProduct.imagePath);
     leftImage.setAttribute('alt', leftProduct.name);
@@ -77,9 +82,9 @@ function render() {
     rightImage.setAttribute('src', rightProduct.imagePath);
     rightImage.setAttribute('alt', rightProduct.name);
     rightImage.setAttribute('title', rightProduct.name);
-}
-}
 
+ }
+// }
 render();
 
 
@@ -87,8 +92,7 @@ imageSection.addEventListener('click', handleClickOnProduct);
 var totalClicks = 0;
 
 function handleClickOnProduct(event) {
-    if (totalClicks < 25) {
-        
+    if (totalClicks<25) {
                     if (event.target.id !== 'imagesSection') {
 
                         if (event.target.id === 'leftImage') {
