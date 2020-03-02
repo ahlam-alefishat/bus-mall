@@ -127,7 +127,8 @@ function render2() {
     container.appendChild(ul);
     for (var i = 0; i < Product.all.length; i++) {
         var li = document.createElement('li');
-        li.textContent = `Image ${i} has:  ${Product.all[i].clicks} clicks, and , ${Product.all[i].views} views.`;
+        Product.all[i].name=(Product.all[i].name).split(".")[0];
+        li.textContent = ` ${Product.all[i].name} has:  ${Product.all[i].clicks} clicks, and , ${Product.all[i].views} views.`;
         ul.appendChild(li);
     }
 }
