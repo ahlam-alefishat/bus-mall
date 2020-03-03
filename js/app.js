@@ -23,7 +23,7 @@ var productsNames = ['bag.jpg',
 var clicksLabels=[];
 var itemLabels = [];
 var viewsLabels=[];
-
+var diffDisplay=[];
 var leftImage = document.querySelector('#leftImage');
 var middleImage = document.querySelector('#middleImage');
 var rightImage = document.querySelector('#rightImage');
@@ -56,7 +56,7 @@ for (var i = 0; i < productsNames.length; i++) {
     new Product(productsNames[i]);
 }
 
-var diffDisplay=[];
+
 var leftProduct, middleProduct, rightProduct;
 
 
@@ -65,10 +65,8 @@ function render() {
     middleProduct = Product.all[randomNumber(0, Product.all.length - 1)];
     rightProduct = Product.all[randomNumber(0, Product.all.length - 1)];
 
-    while (leftProduct === middleProduct || leftProduct === rightProduct || middleProduct ===rightProduct){
-render();
-     }
-     while(diffDisplay.includes(leftProduct.name)  || diffDisplay.includes(middleProduct.name) ||diffDisplay.includes(rightProduct.name) || leftProduct === middleProduct || leftProduct === rightProduct || middleProduct === rightProduct ){
+
+     while(leftProduct === middleProduct || leftProduct === rightProduct || middleProduct ===rightProduct||diffDisplay.includes(leftProduct.name)  || diffDisplay.includes(middleProduct.name) ||diffDisplay.includes(rightProduct.name) || leftProduct === middleProduct || leftProduct === rightProduct || middleProduct === rightProduct ){
         leftProduct = Product.all[randomNumber(0, Product.all.length - 1)];
         middleProduct = Product.all[randomNumber(0, Product.all.length - 1)];
         rightProduct = Product.all[randomNumber(0, Product.all.length - 1)];
@@ -79,7 +77,7 @@ render();
      diffDisplay[0] = leftProduct.name;
    diffDisplay[1] = middleProduct.name;
     diffDisplay[2] = rightProduct.name;
-    //if(leftProduct !== middleProduct && leftProduct !== rightProduct && middleProduct !==rightProduct ){
+   
 
     leftImage.setAttribute('src', leftProduct.imagePath);
     leftImage.setAttribute('alt', leftProduct.name);
@@ -139,8 +137,7 @@ function render2() {
         var li = document.createElement('li');
         Product.all[i].name=(Product.all[i].name).split(".")[0];
         li.textContent = ` ${Product.all[i].name} has:  ${Product.all[i].clicks} clicks, and , ${Product.all[i].views} views.`;
-
-
+        
         ul.appendChild(li);
     }
 }
