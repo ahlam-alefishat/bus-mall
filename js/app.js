@@ -52,10 +52,28 @@ function Product(name) {
 }
 Product.all = [];
 
-for (var i = 0; i < productsNames.length; i++) {
+
+function updateProduct() {
+    var productString = JSON.stringify(Product.all);
+    localStorage.setItem('chart', productString);
+  }
+
+  
+
+  function getProduct() {
+    var productString = localStorage.getItem('chart');
+    console.log(productString);
+    if(productString) {
+        Product.all = JSON.parse( productString);
+      console.log(Product.all);
+      render3();
+  
+    }
+  } 
+  
+  for (var i = 0; i < productsNames.length; i++) {
     new Product(productsNames[i]);
 }
-
 
 var leftProduct, middleProduct, rightProduct;
 
@@ -96,6 +114,79 @@ function render() {
 render();
 
 
+
+
+function render2() {
+    var container = document.getElementById('container');
+    var ul = document.getElementById('result');
+    container.appendChild(ul);
+    for (var i = 0; i < Product.all.length; i++) {
+        var li = document.createElement('li');
+        Product.all[i].name=(Product.all[i].name).split(".")[0];
+        li.textContent = ` ${Product.all[i].name} has:  ${Product.all[i].clicks} clicks, and , ${Product.all[i].views} views.`;
+        
+        ul.appendChild(li);
+    }
+}
+function updateChart() {
+    for (var i = 0; i < Product.all.length; i++) {
+      itemLabels.push((Product.all[i].name).split(".")[0]);
+      clicksLabels.push(Product.all[i].clicks);
+      viewsLabels.push(Product.all[i].views);
+    }
+  }
+var ctx = document.getElementById('chart').getContext('2d');
+function render3(){
+    updateChart();
+
+    
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels:itemLabels,
+        datasets: [{
+            label: `#Of total clicks $`,
+            data:clicksLabels ,
+            backgroundColor: 
+                'rgba(194, 73, 71, 1)',
+                
+    
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+            ],
+            borderWidth: 1 ,
+        },
+   
+            {
+                label: '# of views',
+                data:viewsLabels,
+                backgroundColor: 'rgba(234, 189, 203, 1)',
+                borderColor: 'rgba(295, 99, 132, 1)',
+                borderWidth: 1,
+      
+              }]
+            },
+
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+
+}
+function randomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 imageSection.addEventListener('click', handleClickOnProduct);
 var totalClicks = 0;
 
@@ -119,86 +210,22 @@ function handleClickOnProduct(event) {
                         rightProduct.views++;
 
                         render();
+                    
+                         
                     }
                 }
             
     else {
         console.log('more than 25 clicks');
         imageSection.removeEventListener('click', handleClickOnProduct);
-        render3();
-    }
-}
-
-function render2() {
-    var container = document.getElementById('container');
-    var ul = document.getElementById('result');
-    container.appendChild(ul);
-    for (var i = 0; i < Product.all.length; i++) {
-        var li = document.createElement('li');
-        Product.all[i].name=(Product.all[i].name).split(".")[0];
-        li.textContent = ` ${Product.all[i].name} has:  ${Product.all[i].clicks} clicks, and , ${Product.all[i].views} views.`;
         
-        ul.appendChild(li);
-    }
-}
-function updateChart() {
-    for (var i = 0; i < Product.all.length; i++) {
-      itemLabels.push((Product.all[i].name).split(".")[0]);
-      clicksLabels.push(Product.all[i].clicks);
-      viewsLabels.push(Product.all[i].views);
-    }
-  }
-
-function render3(){
-    updateChart();
-    var ctx = document.getElementById('chart').getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels:itemLabels,
-        datasets: [{
-            label: `#Of total clicks $`,
-            data:clicksLabels ,
-            backgroundColor: 
-                'rgba(255, 99, 132, 0.2)',
-                
-    
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1 ,
-        },
-   
-            {
-                label: '# of views',
-                data:viewsLabels,
-                backgroundColor: 'rgba(250, 99, 189, 0.2)',
-                borderColor: 'rgba(295, 99, 132, 1)',
-                borderWidth: 1,
+         updateProduct();
+      render3();
+       
+        
       
-              }]
-            },
-
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
-        }
     }
-});
-
 }
-function randomNumber(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+getProduct();
 
-
-
+  
