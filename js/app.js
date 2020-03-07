@@ -24,11 +24,12 @@ var clicksLabels=[];
 var itemLabels = [];
 var viewsLabels=[];
 var diffDisplay=[];
+//selecting images
 var leftImage = document.querySelector('#leftImage');
 var middleImage = document.querySelector('#middleImage');
 var rightImage = document.querySelector('#rightImage');
 var imageSection = document.querySelector('#imagesSection');
-
+//setting image attributes
 leftImage.setAttribute('src', `img/${productsNames[0]}`);
 leftImage.setAttribute('alt', productsNames[0]);
 leftImage.setAttribute('title', productsNames[0]);
@@ -42,7 +43,7 @@ rightImage.setAttribute('alt', productsNames[2]);
 rightImage.setAttribute('title', productsNames[2]);
 
 
-
+//constructor that have all the properties 
 function Product(name) {
     this.name = name;
     this.clicks = 0;
@@ -52,14 +53,14 @@ function Product(name) {
 }
 Product.all = [];
 
-
+//added a local storage and converting it to JSAON
 function updateProduct() {
     var productString = JSON.stringify(Product.all);
     localStorage.setItem('chart', productString);
   }
 
   
-
+//to get back data from the local storage 
   function getProduct() {
     var productString = localStorage.getItem('chart');
     console.log(productString);
@@ -70,14 +71,14 @@ function updateProduct() {
   
     }
   } 
-  
+  //creating new objects 
   for (var i = 0; i < productsNames.length; i++) {
     new Product(productsNames[i]);
 }
 
 var leftProduct, middleProduct, rightProduct;
 
-
+// to display a three unrepeated unique images 
 function render() {
     leftProduct = Product.all[randomNumber(0, Product.all.length - 1)];
     middleProduct = Product.all[randomNumber(0, Product.all.length - 1)];
@@ -115,7 +116,7 @@ render();
 
 
 
-
+//showing the results as unordered list
 function render2() {
     var container = document.getElementById('container');
     var ul = document.getElementById('result');
@@ -128,6 +129,8 @@ function render2() {
         ul.appendChild(li);
     }
 }
+
+//helper function to assign values to the chart
 function updateChart() {
     for (var i = 0; i < Product.all.length; i++) {
       itemLabels.push((Product.all[i].name).split(".")[0]);
@@ -138,7 +141,7 @@ function updateChart() {
 var ctx = document.getElementById('chart').getContext('2d');
 function render3(){
     updateChart();
-
+//showing the results as chart
     
 var myChart = new Chart(ctx, {
     type: 'bar',
@@ -146,27 +149,23 @@ var myChart = new Chart(ctx, {
         labels:itemLabels,
         datasets: [{
             label: `#Of total clicks $`,
-            data:clicksLabels ,
+            data:clicksLabels ,//calling the array that has the clicks
             backgroundColor: 
-                'rgba(194, 73, 71, 1)',
+                'rgb(207, 116, 116)',
                 
     
             borderColor: [
                 'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)',
+                
             ],
             borderWidth: 1 ,
         },
    
             {
                 label: '# of views',
-                data:viewsLabels,
-                backgroundColor: 'rgba(234, 189, 203, 1)',
-                borderColor: 'rgba(295, 99, 132, 1)',
+                data:viewsLabels,//calling the array that has the numer of views
+                backgroundColor: 'rgb(135, 74, 74)',
+                borderColor: 'rgba(255, 255, 255, 1)',
                 borderWidth: 1,
       
               }]
@@ -184,9 +183,7 @@ var myChart = new Chart(ctx, {
 });
 
 }
-function randomNumber(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+// added event listner to the clicks
 imageSection.addEventListener('click', handleClickOnProduct);
 var totalClicks = 0;
 
@@ -225,6 +222,10 @@ function handleClickOnProduct(event) {
         
       
     }
+}
+//helper function to get random images
+function randomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 getProduct();
 
